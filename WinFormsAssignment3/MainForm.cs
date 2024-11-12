@@ -40,7 +40,11 @@ public partial class MainForm : Form
             return;
 
         Card dealtCard = deck.DealCard();
-        hand[pos] = dealtCard.Id != NO_CARD ? dealtCard : null;
+        if (dealtCard != null && dealtCard.Id != NO_CARD)
+            hand[pos] = dealtCard;
+        else
+            hand[pos] = null;
+
     }
 
     private bool IsRedraw()
@@ -79,12 +83,22 @@ public partial class MainForm : Form
 
     private void UpdateHandPics()
     {
-        hand1PictureBox.Image = hand[0].CardImage;
-        hand2PictureBox.Image = hand[1].CardImage;
-        hand3PictureBox.Image = hand[2].CardImage;
-        hand4PictureBox.Image = hand[3].CardImage;
-        hand5PictureBox.Image = hand[4].CardImage;
+        if (hand[0] != null) hand1PictureBox.Image = hand[0].CardImage;
+        else hand1PictureBox.Image = null;
+
+        if (hand[1] != null) hand2PictureBox.Image = hand[1].CardImage;
+        else hand2PictureBox.Image = null;
+
+        if (hand[2] != null) hand3PictureBox.Image = hand[2].CardImage;
+        else hand3PictureBox.Image = null;
+
+        if (hand[3] != null) hand4PictureBox.Image = hand[3].CardImage;
+        else hand4PictureBox.Image = null;
+
+        if (hand[4] != null) hand5PictureBox.Image = hand[4].CardImage;
+        else hand5PictureBox.Image = null;
     }
+
     private void UpdatePictureBox(PictureBox pictureBox, Card card)
     {
         pictureBox.Image = null;

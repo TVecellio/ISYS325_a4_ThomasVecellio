@@ -41,6 +41,7 @@ public class Deck
             string name = Path.GetFileNameWithoutExtension(imageKey);
             Image cardImage = imageList.Images[imageKey];
             var card = new Card(i, name, cardImage);
+            cards.Add(card);
         }
 
         Random rng = new Random();
