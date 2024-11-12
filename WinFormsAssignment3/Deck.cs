@@ -24,9 +24,20 @@ public class Deck
     public void Shuffle()
     {
         cards.Clear();
+        if(imageList.Images.Count == 0)
+            {
+            // Handle the case where there are no images in the list
+            MessageBox.Show("ImageList is empty.");
+            return;
+        }
         for (int i = 0; i < imageList.Images.Count; i++)
         {
             string imageKey = imageList.Images.Keys[i];
+            if (string.IsNullOrEmpty(imageKey))
+            {
+                MessageBox.Show($"Image key at index {i} is invalid.");
+                continue;
+            }
             string name = Path.GetFileNameWithoutExtension(imageKey);
             Image cardImage = imageList.Images[imageKey];
             var card = new Card(i, name, cardImage);
@@ -71,7 +82,7 @@ public class Deck
                 {
                     if (card != Card.NoCard)
                     {
-                        // Save card Id and Name (or any other data you need)
+                        
                         writer.WriteLine($"{card.Id},{card.Name}");
                     }
                     else
@@ -88,7 +99,7 @@ public class Deck
         }
     }
 
-    // Load a hand from a file
+    
     public bool LoadHand(string filename, Card[] hand)
     {
         try
@@ -106,14 +117,14 @@ public class Deck
                     }
                     else
                     {
-                        // Read Id and Name (or other properties) and create a Card
+                        
                         string[] parts = line.Split(',');
                         if (parts.Length >= 2 && int.TryParse(parts[0], out int cardId))
                         {
                             string name = parts[1];
                             if (cardId >= 0 && cardId < imageList.Images.Count)
                             {
-                                // Create a Card based on the ID and name
+                                
                                 Image cardImage = imageList.Images[imageList.Images.Keys[cardId]];
                                 hand[i] = new Card(cardId, name, cardImage);
                             }
