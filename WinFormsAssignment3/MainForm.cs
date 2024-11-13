@@ -23,7 +23,7 @@ public partial class MainForm : Form
 
     private void MainForm_Load(object sender, EventArgs e)
     {
-        // Initialize the deck with the image list
+        
         deck = new Deck(cardsImageList);
 
         deck.Shuffle();
@@ -36,7 +36,7 @@ public partial class MainForm : Form
 
     private void DealCard(int pos)
     {
-        if (pos < 0 || pos >= hand.Length)
+        if (pos < 0 || pos >= hand.Length) //HAND KEEPS BEING NULL IDK WHY
             return;
 
         Card dealtCard = deck.DealCard();
