@@ -249,7 +249,7 @@ partial class MainForm
         ShowDeckButton.TabIndex = 10;
         ShowDeckButton.Text = "Show Deck";
         ShowDeckButton.UseVisualStyleBackColor = true;
-        ShowDeckButton.Click += showDeckButton_Click;
+        ShowDeckButton.Click += ShowDeckButton_Click;
         // 
         // MainForm
         // 

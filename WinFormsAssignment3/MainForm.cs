@@ -13,6 +13,7 @@ public partial class MainForm : Form
     private Deck deck;
     private Card[] hand = new Card[5];
     private const int NO_CARD = -1;
+    private DeckForm deckform;
 
     public MainForm()
     {
@@ -27,6 +28,7 @@ public partial class MainForm : Form
         deck = new Deck(cardsImageList);
 
         deck.Shuffle();
+        deckform?.UpdateDeck();
         for (int i = 0; i < hand.Length; i++)
         {
             DealCard(i);
@@ -45,15 +47,6 @@ public partial class MainForm : Form
         else
             hand[pos] = null;
 
-    }
-
-    private bool IsRedraw()
-    {
-        return keep1CheckBox.Checked ||
-               keep2CheckBox.Checked ||
-               keep3CheckBox.Checked ||
-               keep4CheckBox.Checked ||
-               keep5CheckBox.Checked;
     }
 
     private void dealButton_Click(object sender, EventArgs e)
@@ -81,7 +74,7 @@ public partial class MainForm : Form
         keep5CheckBox.Checked = false;
     }
 
-    private void UpdateHandPics()
+    private void UpdateHandPics() //ITS NOT THIS EITHER IDK WHAT THE PROBLEM IS
     {
         if (hand[0] != null) hand1PictureBox.Image = hand[0].CardImage;
         else hand1PictureBox.Image = null;
@@ -98,16 +91,6 @@ public partial class MainForm : Form
         if (hand[4] != null) hand5PictureBox.Image = hand[4].CardImage;
         else hand5PictureBox.Image = null;
     }
-
-    private void UpdatePictureBox(PictureBox pictureBox, Card card)
-    {
-        pictureBox.Image = null;
-        if (card != null && card.Id > NO_CARD && card.Id < cardsImageList.Images.Count)
-        {
-            pictureBox.Image = cardsImageList.Images[card.Id];
-        }
-    }
-
     private void saveButton_Click(object sender, EventArgs e)
     {
         saveFileDialog.InitialDirectory = HANDS_FOLDER;
@@ -166,12 +149,20 @@ public partial class MainForm : Form
         keep5CheckBox.Checked = !keep5CheckBox.Checked;
     }
 
-    private void showDeckButton_Click(object sender, EventArgs e)
+    private void ShowDeckButton_Click(object sender, EventArgs e)
     {
         
-            DeckForm deckForm = new DeckForm(deck); // Pass the initialized deck
-            deckForm.ShowDialog(); // Show as a modal dialog
-       
+        if (deckform == null || !deckform.Visible)
+        {
 
+            deckform = new DeckForm(deck);  
+
+            
+            deckform.Show();
+        }
+        else
+        { 
+            deckform.BringToFront();
+        }
     }
 }
